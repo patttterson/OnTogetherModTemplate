@@ -38,6 +38,7 @@ A completed example plugin using this template can be found at [patttterson/Bett
   - `TS_AUTHOR`
   - `TS_NAME`
 
+### External Dependencies
 Unless your mod has *external dependencies,* everything you need should already be included in the project file. The game libraries are provided from [OnTogether.GameLibs](https://www.nuget.org/packages/OnTogether.GameLibs), which is my own package. If you need to add external dependencies, you can do so by adding them to the project file like this:
 ```xml
 <Reference Include="ExampleLibrary">
