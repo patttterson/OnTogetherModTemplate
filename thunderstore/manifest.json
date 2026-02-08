@@ -1,0 +1,7 @@
+﻿{
+    "name": "ExamplePlugin",
+    "version_number": "1.0.0",
+    "website_url": "",
+    "description": "An example plugin for On-Together: Virtual Co-Working. If you're seeing this on Thunderstore, screenshot this and send it to the author :3",
+    "dependencies": []
+}
