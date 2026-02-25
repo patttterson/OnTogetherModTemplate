@@ -33,28 +33,30 @@ jobs:
 
       - name: Prepare Thunderstore package
         run: |
-          mkdir -p thunderstore/BepInEx/plugins/BetterMediaControls
+          set -euo pipefail
 
-          cp bin/Release/netstandard2.1/BetterMediaControls.dll \
-             thunderstore/BepInEx/plugins/BetterMediaControls/
+          mkdir -p "thunderstore/BepInEx/plugins/${{ env.TS_NAME }}"
+          cp bin/Release/netstandard2.1/${{ env.TS_NAME }}.dll "thunderstore/BepInEx/plugins/${{ env.TS_NAME }}/"
 
-          mkdir -p thunderstore/BepInEx/plugins/BetterMediaControls/icons
+          if compgen -G "icons/*.png" > /dev/null; then
+            mkdir -p "thunderstore/BepInEx/plugins/${{ env.TS_NAME }}/icons"
+            cp icons/*.png "thunderstore/BepInEx/plugins/${{ env.TS_NAME }}/icons/"
+          fi
 
-          cp icons/*.png thunderstore/BepInEx/plugins/BetterMediaControls/icons/
+          if [ -f README.md ]; then
+            cp README.md thunderstore/
+          fi
 
-          cp README.md thunderstore/
-      
       - name: Extract version
         run: |
           echo "VERSION=${GITHUB_REF_NAME#v}" >> $GITHUB_ENV
-      
+
       - name: Create Thunderstore package
         run: |
           cd thunderstore
-          zip -r ../${{ env.TS_AUTHOR }}-${{ env.TS_NAME }}-${{ env.VERSION }}.zip ./*
-    
+          zip -r "../${{ env.TS_AUTHOR }}-${{ env.TS_NAME }}-${{ env.VERSION }}.zip" ./*
+
       - name: Create Github Draft Release
-        id: create_release
         uses: softprops/action-gh-release@v2
         with:
           draft: true
